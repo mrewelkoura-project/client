@@ -14,20 +14,19 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded:false,
-      jerseys:{}
+      data:[]
     };
   }
 
   componentDidMount(){
     axios
-    .get('/api/jerseysdata')
+    .get('http://localhost:8080/api/data')
     .then((result)=>{
       this.setState({
-        isLoaded:true,        
+        data:result.data      
       });
+      console.log(this.state.data)
       console.log(result.data)
-      console.log(this.jerseys)
     })
     .catch((err)=>{
       console.log(err)
@@ -40,11 +39,11 @@ export default class App extends React.Component {
         <Router>
           <NavigationBar />
           <Routes>
-            <Route exact path="/" element={<MainPage />} />
+            <Route exact path="/" element={<MainPage data={this.state.data} />} />
             <Route exact path="/aboutus" element={<AboutUs />} />
             <Route exact path="/cart" element={<Cart />} />
             <Route exact path="/contact" element={<Contact />} />
-            <Route exact path="/confirm" element={<Confirm/>}/>
+            <Route exact path={`/confirm/:_id`} element={<Confirm data={this.state.data}/>}/>
             <Route exact path="/addJersey" element={<AddJersey/>}/>
             <Route default element={<NotFound />} />
           </Routes>

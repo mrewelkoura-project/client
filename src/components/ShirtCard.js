@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 
-const ShirtCard = () => {
+const ShirtCard = (props) => {
+
+  const [name, setName] = useState("");
+  const [desc, setDesch] = useState("");
 
   // const [data, setData] = useState(null);
 
@@ -18,21 +20,28 @@ const ShirtCard = () => {
 
   // const navigate = useNavigate();
 
-  return ( <div>Hello</div>
-    // <div className="cardContainer">
-    // {data.map((elem,i)=>{return(
-    //   <Link style={{ textDecoration: 'none', color:"black" }} to="/confirm" key={i}>
-    //     <div className="cardBox" >
-    //     {/* <img className="jerseyImg" src={elem.img} alt="jersey" /> */}
-    //     <h4 className="jerseyName">{elem.name}</h4>
-    //     <p>{elem.desc}</p>
-    //   </div>
-    //     </Link>
-    // )})}
+  return ( 
+    <div className="cardContainer">
+    {
+      props.data.map((elem,i)=>{return(
+      <Link style={{ textDecoration: 'none', color:"black" }} to={`/confirm/${elem._id}`} key={elem._id} > 
+        <div className="cardBox"   >
+         <img 
+         className="jerseyImg" 
+         src={elem.img} 
+         alt="jersey" />
+
+        <h4 className="jerseyName">{elem.name}</h4>
+
+        <p>{elem.desc}</p>
+        <h2>Prix : {elem.price}</h2>
+      </div>
+        </Link>
+    )})}
       
         
         
-    // </div>
+   </div>
   );
 };
 

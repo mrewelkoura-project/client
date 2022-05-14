@@ -1,32 +1,30 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import axios from "axios";
 import formdata from "form-data"
+ 
+const initialValues = {
+  name:"",
+  desc:"",
+  img:"",
+  price:""
+}
 
 const AddJersey = () => {
 
-  const [formValue, setFormValue] = useState({
-    name:"",
-    desc:"",
-    img:"",
-  });
+  const [values, setValues] = useState(initialValues)
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    console.log(e.target.value)
-    setFormValue((prevState)=>{
-      return {
-        ...prevState,
-        [name]:value,
-      };
+  const handleInputChange = (e) =>{
+    const { name , value } = e.target;
+    setValues({
+      ...values,
+      [name]:value,
     });
+    console.log(values)
   };
-
-  const {name, desc, img } = formValue;
 
   const postImage = (e)=>{
     e.preventDefault();
-    console.log(e)
-    let img= e.target.files[0]
+    let img = e.target.files[0]
     const formData = new formdata();
     formData.append("file",img)
     formData.append("upload_preset", "ehzqyvxt")
@@ -35,33 +33,28 @@ const AddJersey = () => {
     .post("http://api.cloudinary.com/v1_1/brahamtahar/upload", formData)
     .then((result)=>{
         console.log(result)
-        img = result.data.url
+        values.img = result.data.url
     })
 };
 
 const handlePost = () => {
-  axios.post("http://localhost:3001/api/postjersey", {
-    name: name,
-    desc: desc,
-    img:img
-  })
+  axios.post("http://localhost:8080/api/post", values)
   .then((result)=>{
-    console.log(result, "posted!")
+    alert(`${values.name && values.desc}, confirmé !`)
   })
 };
 
   return (
     <div>
-    <form onSubmit={handlePost}>
+    <form>
     <div>
-        <label>Jersey Name :</label>
+        <label>Jersey Name : </label>
         <input
           type="text"
           id="name"
           placeholder="Team, club..."
           name="name"
-          value={formValue.name}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         />
       </div>
@@ -72,10 +65,21 @@ const handlePost = () => {
           id="desc"
           placeholder="color, home/ext..."
           name="desc"
-          value={formValue.desc}
-          onChange={handleChange}
+          onChange={handleInputChange}
           required
         ></textarea>
+      </div>
+
+      <div>
+        <label>Jersey Price : </label>
+        <input
+          type="text"
+          id="price"
+          placeholder="Price..."
+          name="price"
+          onChange={handleInputChange}
+          required
+        />
       </div>
 
       <div>
@@ -88,7 +92,7 @@ const handlePost = () => {
         required />
       </div>
       <div>
-      <input type="submit" value="Add Jersey"/>
+      <button type="submit" onClick={handlePost}>Confirm</button>
       </div>
     </form>
       
