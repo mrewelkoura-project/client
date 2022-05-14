@@ -1,5 +1,6 @@
 import React from 'react';
 import ShirtCard from './ShirtCard.js';
+import "./MainPage.css";
 
 const MainPage = () => {
     return (
@@ -9,5 +10,6 @@ const MainPage = () => {
         </div>
     )
 }
+
 
 export default MainPage;

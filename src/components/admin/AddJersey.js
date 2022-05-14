@@ -23,14 +23,6 @@ const AddJersey = () => {
 
   const {name, desc, img } = formValue;
 
-  const handlePost = () => {
-    axios.post("http://localhost:3000/api/postjersey", {
-      name: name,
-      desc: desc,
-      img:img
-    });
-  };
-
   const postImage = (e)=>{
     e.preventDefault();
     console.log(e)
@@ -47,9 +39,20 @@ const AddJersey = () => {
     })
 };
 
+const handlePost = () => {
+  axios.post("http://localhost:3001/api/postjersey", {
+    name: name,
+    desc: desc,
+    img:img
+  })
+  .then((result)=>{
+    console.log(result, "posted!")
+  })
+};
+
   return (
     <div>
-    <form>
+    <form onSubmit={handlePost}>
     <div>
         <label>Jersey Name :</label>
         <input
@@ -57,6 +60,7 @@ const AddJersey = () => {
           id="name"
           placeholder="Team, club..."
           name="name"
+          value={formValue.name}
           onChange={handleChange}
           required
         />
@@ -68,6 +72,7 @@ const AddJersey = () => {
           id="desc"
           placeholder="color, home/ext..."
           name="desc"
+          value={formValue.desc}
           onChange={handleChange}
           required
         ></textarea>
@@ -75,10 +80,15 @@ const AddJersey = () => {
 
       <div>
         <label>Upload Jersey img :</label>
-        <input type="file" id="image" name="img" onChange={postImage} required />
+        <input 
+        type="file" 
+        id="image" 
+        name="img" 
+        onChange={postImage} 
+        required />
       </div>
       <div>
-      <button type="submit" onSubmit={handlePost}>Submit</button>
+      <input type="submit" value="Add Jersey"/>
       </div>
     </form>
       

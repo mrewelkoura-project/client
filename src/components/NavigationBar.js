@@ -1,18 +1,19 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "./NavigationBar.css"
 
 const NavigationBar = () => {
   return (
     <div>
       <Navbar bg="dark" variant="dark" sticky="top">
-        <Container>
+        <Container className="navContainer">
           <Link to="/">
             <Navbar.Brand>
               <img
                 src="/images/a.png"
-                width="80"
-                height="80"
+                width="100"
+                height="100"
                 style={{ borderRadius: 10 }}
                 className="d-inline-block align-top"
                 alt="Mrewel Koura Logo"
@@ -20,22 +21,25 @@ const NavigationBar = () => {
             </Navbar.Brand>
           </Link>
 
-          <Nav className="me-auto">
-            <Link to="/aboutus">
+          <Nav className="me-auto navlist">
+            <Nav.Link href="/aboutus">
               <li>About Us</li>
-            </Link>
-            <Link to="/contact">
+            </Nav.Link>
+            <Nav.Link href="/contact">
               <li>Features</li>
-            </Link>
-            <Link to="/cart">
+            </Nav.Link>
+            <Nav.Link href="/cart">
               <li>Pricing</li>
-            </Link>
-            <Link to="/addJersey">
+            </Nav.Link>
+            <Nav.Link href="/addJersey">
               <li>add new jersey</li>
-            </Link>
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
+
+
+      
     </div>
   );
 };

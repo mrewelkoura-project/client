@@ -14,19 +14,20 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data:[]
+      isLoaded:false,
+      jerseys:{}
     };
   }
 
   componentDidMount(){
     axios
     .get('/api/jerseysdata')
-    .then((response)=>{
+    .then((result)=>{
       this.setState({
-        data:response.data
-        
+        isLoaded:true,        
       });
-      console.log(this.data, "HELLO")
+      console.log(result.data)
+      console.log(this.jerseys)
     })
     .catch((err)=>{
       console.log(err)
